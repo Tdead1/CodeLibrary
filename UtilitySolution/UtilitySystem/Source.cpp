@@ -6,6 +6,7 @@
 
 int main()
 {
+	// Init variables.
 	std::vector<Unit*> units;
 	units.resize(MAXUNITAMOUNT * sizeof(Unit*));
 	Utility ai = Utility(&units);
@@ -17,7 +18,7 @@ int main()
 	}
 	std::cout << units.size() << "\n";
 	
-	
+	// Update everything.
 	while (true)
 	{
 		ai.Update();
