@@ -14,7 +14,7 @@ Unit * Utility::AddUnit()
 		if (i == nullptr)
 		{
 			Human x;
-			x.id = counter;
+			//x.id = counter;
 			rawUnitArray[counter] = x;
 			i = &rawUnitArray[counter];
 			return i;

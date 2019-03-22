@@ -1,12 +1,13 @@
 #pragma once
-#include "Behaviors.h"
+#include "BehaviorCollection.h"
 
 class Unit
 {
 public:
 	std::vector<IStat*> stats;
+	//std::vector<Behavior*> availableBehaviors; ? Perhaps a solution.
 
-	int id;
+	//int id;
 };
 
 struct Human : public Unit
@@ -15,6 +16,7 @@ struct Human : public Unit
 	MaxIdealFloat dexterity;
 	MaxIdealFloat intelligence;
 	MaxIdealFloat health;
+	
 
 	Human()
 	{
@@ -41,6 +43,7 @@ struct Soldier : public Human
 		intelligence.value = 3.0f;
 
 		meleeDamage.value = 2.0f;
+		stats.push_back(&meleeDamage);
 	}
 };
 

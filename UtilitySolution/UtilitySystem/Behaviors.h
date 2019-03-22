@@ -1,9 +1,21 @@
 #pragma once
-#include "Stats.h"
+#include "BehaviorCollection.h"
 
-class Behavior
+// Holds a list of all possible behaviors.
+class Behaviors
 {
 public:
-	std::vector<IStat*> stats;
-};
+	Idle idle;
 
+	std::vector<Behavior*> list;
+
+	Behaviors()
+	{
+		list =
+		{
+			&idle
+			//...
+		};
+
+	};
+};
