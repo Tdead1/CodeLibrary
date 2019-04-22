@@ -2,7 +2,7 @@
 //! Contains some useful fast functions for math related operations.
 struct Math
 {
-	//! Odd implementation for all numerical types.
+	//! Odd implementation for integral types.
 	template <typename T>
 	static bool IsOdd(T number)
 	{
@@ -10,7 +10,7 @@ struct Math
 		if (number & 1) return true;
 		else return false;
 	};
-	//! Even implementation for all numerical types.
+	//! Even implementation for integral types.
 	template <typename T>
 	static bool IsEven(T number)
 	{
@@ -35,8 +35,8 @@ enum class LogType
 struct Log
 {
 public:
-	// The log level defines what is printed and what isn't: Making the LogDebugLevel higher will print more (0-4).
-	#define LogDebugLevel 4
+	// The log level defines what is printed and what isn't: Making the LogDebugLevel higher will print more (0-4), 0 will print everything.
+	#define LogDebugLevel 0
 
 	template <typename T>
 	static void Print(T log, const LogType type = LogType::MESSAGE)
@@ -69,6 +69,7 @@ public:
 			std::cout << log << "\n";
 		}
 	};
+	#undef LogDebugLevel
 };
 
 #include <chrono>
