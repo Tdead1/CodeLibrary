@@ -86,15 +86,15 @@ struct Timer
 		endTime = std::chrono::high_resolution_clock::now();
 		deltaTime = std::chrono::duration_cast<std::chrono::nanoseconds>(endTime - startTime).count();
 		// In seconds
-		return static_cast<double>(deltaTime) * 0.000000001;
+		return static_cast<float>(deltaTime * 0.000000001);
 	};
 	//! Prints end time minus start time.
 	void Print()
 	{
 		deltaTime = std::chrono::duration_cast<std::chrono::nanoseconds>(endTime - startTime).count();
-		//if (deltaTime > 1000000000)
-		//	Log::Print("This took " + std::to_string(static_cast<double>(deltaTime) * 0.000000001) + " seconds.");
-		//else
+		if (deltaTime > 1000000000)
+			Log::Print("This took " + std::to_string(static_cast<double>(deltaTime) * 0.000000001) + " seconds.");
+		else
 			Log::Print("This took " + std::to_string(deltaTime) + " nano seconds.");
 	};
 
