@@ -1,5 +1,6 @@
-
-constexpr int stack_limit = 25;
+// This is also on my github :)
+//#include "D:\Repros\CodeLibrary\GenericFunctionLibrary\GenericFunctionLibrary\Helper.h"
+constexpr int stack_limit = 24;
 
 struct Fib
 {
@@ -11,8 +12,8 @@ struct Fib
 			return 1;
 		if constexpr (N > stack_limit)
 		{
-			int nMinusOne = Get<stack_limit - 1>();
-			int nMinusTwo = Get<stack_limit - 2>();
+			long long nMinusOne = Get<stack_limit - 1>();
+			long long nMinusTwo = Get<stack_limit - 2>();
 			int total = 0;
 			// No longer constexpr, otherwise we run out of stack.
 			for (int i = stack_limit; i <= N; i++)
@@ -31,13 +32,13 @@ struct Fib
 
 	static long long Get(const int aValueExeedingLimit)
 	{
-		if (aValueExeedingLimit <= stack_limit)
+		if (aValueExeedingLimit < stack_limit)
 			return FibUntilStackLimit[aValueExeedingLimit];
 
 		// No longer constexpr, otherwise we run out of stack.
-		int nMinusOne = FibUntilStackLimit[stack_limit - 1];
-		int nMinusTwo = FibUntilStackLimit[stack_limit - 2];
-		int total = 0;
+		long long nMinusOne = FibUntilStackLimit[stack_limit - 1];
+		long long nMinusTwo = FibUntilStackLimit[stack_limit - 2];
+		long long total = 0;
 		for (int i = stack_limit; i <= aValueExeedingLimit; i++)
 		{
 			total = nMinusOne + nMinusTwo;
@@ -48,7 +49,7 @@ struct Fib
 	}
 
 	// How do I turn this into something... not horrible? useful?
-	const static long long inline FibUntilStackLimit[stack_limit + 1] = {
+	constexpr static long long inline FibUntilStackLimit[stack_limit] = {
 	Fib::Get<0>(),
 	Fib::Get<1>(),
 	Fib::Get<2>(),
@@ -72,30 +73,30 @@ struct Fib
 	Fib::Get<20>(),
 	Fib::Get<21>(),
 	Fib::Get<22>(),
-	Fib::Get<23>(),
-	Fib::Get<24>(),
-	Fib::Get<stack_limit>()
+	Fib::Get<23>()
+	// This array must be filled up until stack_limit - 1, but no way to do that using defines or constexprs :(
 	};
 
 };
 
-//#include "iostream"
 int main()
 {
+	//Timer t;
+	//t.Start();
 	long long total = 0;
 	long long c = 0;
 	long long i = 0;
 
-	for (constexpr long long t = 4000000;; i++)
+	for (constexpr long long t = 9000000;; i++)
 	{
 		c = Fib::Get(static_cast<int>(i));
-		if (c > 4000000)
+		if (c > t)
 			break;
 		if (!(c & 1))
 			total += c;
 	}
-
-	//std::cout << "Fib #" << i << " is the first to exceed 4 milion, bringing the total of all evaluated even numbers to: " << Fib::Get(static_cast<int>(i)) << "\n";
-
-	return total;
+	//t.Stop();
+	//t.Print();
+	//std::cout << "Fib #" << i << " is the first to exceed 4 milion, bringing the total of all evaluated even numbers to: " << total << "\n";
+	return 0;
 }

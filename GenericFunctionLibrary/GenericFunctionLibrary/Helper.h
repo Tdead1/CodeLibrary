@@ -1,4 +1,5 @@
 #pragma once
+#include <type_traits>
 //! Contains some useful fast functions for math related operations.
 struct Math
 {
@@ -7,16 +8,13 @@ struct Math
 	static bool IsOdd(T number)
 	{
 		static_assert(std::is_integral<T>::value, "Element needs to be an integral number.");
-		if (number & 1) return true;
-		else return false;
+		return (number & 1);
 	};
 	//! Even implementation for integral types.
 	template <typename T>
 	static bool IsEven(T number)
 	{
-		static_assert(std::is_integral<T>::value, "Element needs to be an integral number.");
-		if (number & 1) return false;
-		else return true;
+		return !Math::IsOdd(number);
 	};
 };
 
@@ -31,6 +29,7 @@ enum class LogType
 
 
 #include <string>
+#include <iostream>
 //! Logger prints anything text based based on it's LogType and on the LogDebugLevel.
 struct Log
 {
@@ -85,19 +84,22 @@ struct Timer
 	float Stop()
 	{
 		endTime = std::chrono::high_resolution_clock::now();
+		deltaTime = std::chrono::duration_cast<std::chrono::nanoseconds>(endTime - startTime).count();
 		// In seconds
-		deltaTime = std::chrono::duration_cast<std::chrono::microseconds>(endTime - startTime).count() * 0.000001;
-		return (float)deltaTime;
+		return static_cast<double>(deltaTime) * 0.000000001;
 	};
 	//! Prints end time minus start time.
 	void Print()
 	{
-		deltaTime = std::chrono::duration_cast<std::chrono::microseconds>(endTime - startTime).count() * 0.000001;
-		Log::Print("This took " + std::to_string(deltaTime) + " seconds.");
+		deltaTime = std::chrono::duration_cast<std::chrono::nanoseconds>(endTime - startTime).count();
+		//if (deltaTime > 1000000000)
+		//	Log::Print("This took " + std::to_string(static_cast<double>(deltaTime) * 0.000000001) + " seconds.");
+		//else
+			Log::Print("This took " + std::to_string(deltaTime) + " nano seconds.");
 	};
 
 private:
 	std::chrono::steady_clock::time_point startTime;
 	std::chrono::steady_clock::time_point endTime;
-	double deltaTime;
+	long long deltaTime = 0;
 };
