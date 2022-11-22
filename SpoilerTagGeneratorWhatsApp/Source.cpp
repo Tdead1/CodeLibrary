@@ -6,7 +6,7 @@ int main()
 	std::wstring s = L"[SPOILER AHEAD]\n";
 	wchar_t wc = L'\u200Bc';
 
-	for (int i = 0; i < 4000; i++)
+	for (int i = 0; i < 6000; i++)
 		s = s + wc;
 
 	const wchar_t* cwc = s.data();
